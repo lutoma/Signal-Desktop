@@ -122,6 +122,5 @@
       },
     },
     /* jshint ignore:end */
-    /* eslint-disable */
-    ];
+  ];
 }());
