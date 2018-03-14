@@ -7,6 +7,8 @@
     window.Whisper.Database.id = window.Whisper.Database.id || 'signal';
     window.Whisper.Database.nolog = true;
 
+    const { Migrations } = window.Signal;
+
     Whisper.Database.migrations = [
         {
             version: "12.0",
@@ -104,7 +106,22 @@
                 var messages = transaction.db.deleteObjectStore('debug');
                 next();
             }
-        }
+        },
+    /* eslint-enable */
+    /* jshint ignore:start */
+    {
+      version: 17, // TODO: Update to 18 once backup merges
+      async migrate(transaction, next) {
+        console.log('migration 17');
+        console.log('Start migration to database version 17');
 
+        await Migrations.V17.run(transaction);
+
+        console.log('Complete migration to database version 17');
+        next();
+      },
+    },
+    /* jshint ignore:end */
+    /* eslint-disable */
     ];
 }());
